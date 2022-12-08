@@ -116,7 +116,7 @@ $ git clone https://github.com/PrangonGhose/To-do-list.git
 ### Get into development
 
 In the terminal, run these commands to get into development.
-
+```
 $ cd To-do-list
 
 $ npm init -y
