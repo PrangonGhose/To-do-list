@@ -6,7 +6,7 @@ module.exports = {
   entry: {
     index: './src/index.js',
   },
-  devtool: 'inline-source-map',
+  devtool: false,
   devServer: {
     static: './dist',
   },
@@ -30,5 +30,10 @@ module.exports = {
   },
   optimization: {
     runtimeChunk: 'single',
+  },
+  performance: {
+    hints: false,
+    maxEntrypointSize: 51200000,
+    maxAssetSize: 51200000,
   },
 };
