@@ -1,74 +1,69 @@
+// Import modules
+import Todo from './todoObject.js';
+import Storage from './localStorage.js';
+import UI, { array } from './domObject.js';
 import './style.css';
 
-const toDoTasks = [
-  {
-    description: 'Wash the dishes',
-    completed: false,
-    index: 3,
-  },
-  {
-    description: 'Complete the project',
-    completed: false,
-    index: 1,
-  },
-  {
-    description: 'Take the dog to walk',
-    completed: false,
-    index: 5,
-  },
-  {
-    description: 'Pay the bill',
-    completed: false,
-    index: 60,
-  },
-  {
-    description: 'Pay the bill',
-    completed: false,
-    index: 4,
-  },
-  {
-    description: 'Pay the bill',
-    completed: false,
-    index: 17,
-  },
-  {
-    description: 'Pay the bill',
-    completed: false,
-    index: 15,
-  },
-  {
-    description: 'Pay the bill',
-    completed: false,
-    index: 55,
-  },
-  {
-    description: 'Pay the bill',
-    completed: false,
-    index: 2,
-  },
-];
+// Grab all elements
+const form = document.querySelector('.add-form');
+const taskItem = document.querySelector('.add-to-list');
+const reload = document.querySelector('.reload');
+const clear = document.querySelector('.clear');
 
-function toDoFunc() {
-  const toDoPlaceholder = document.querySelector('.to-do-placeholder');
-  const toDoArray = [];
-  for (let i = 0; i < toDoTasks.length; i += 1) {
-    toDoArray.push(toDoTasks[i].index);
+// Declare variables
+let todoArr = Storage.getStorage(); // array to store all tasks
+const uiObject = new UI(); // object to be displayed in the DOM
+let index; // index of the task
+if (todoArr.length !== 0) {
+  for (let i = 0; i < todoArr.length; i += 1) {
+    index = todoArr[i].index;
   }
-  toDoArray.sort();
-  for (let i = 0; i < toDoTasks.length; i += 1) {
-    for (let j = 0; j < toDoTasks.length; j += 1) {
-      if (toDoArray[i] === toDoTasks[j].index) {
-        const element = document.createElement('div');
-        element.innerHTML = `<input type="checkbox" name="task${toDoTasks[j].index}" id="task${toDoTasks[j].index}"><label for="task${toDoTasks[j].index}">${toDoTasks[j].description}</label><i class="fa fa-ellipsis-v" aria-hidden="true"></i>`;
-        element.classList.add('task-items');
-        element.classList.add('flex');
-        const hr = document.createElement('hr');
-        hr.classList.add('full-hr');
-        toDoPlaceholder.appendChild(element);
-        toDoPlaceholder.appendChild(hr);
-      }
-    }
-  }
+  index += 1;
+} else {
+  index = 1;
 }
+const completed = false; // status of the task
 
-window.addEventListener('DOMContentLoaded', () => toDoFunc());
+// form part
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (array !== todoArr) {
+    todoArr = array;
+  }
+  if (todoArr.length !== 0) {
+    for (let i = 0; i < todoArr.length; i += 1) {
+      index = todoArr[i].index;
+    }
+    index += 1;
+  } else {
+    index = 1;
+  }
+  const todo = new Todo(taskItem.value, completed, index); // new task object instance
+  todoArr = [...todoArr, todo]; // push to array
+  uiObject.todoArr = todoArr; // passing updated array value to DOM object
+  uiObject.arrayChanger();
+  uiObject.displayData(); // displaying new data in the DOM
+  uiObject.clearInput();
+  Storage.addTodStorage(todoArr); // add to storage
+  index += 1;
+});
+
+// page reload
+reload.addEventListener('click', () => {
+  window.location.reload();
+});
+
+// once the browser is loaded
+window.addEventListener('DOMContentLoaded', () => {
+  uiObject.todoArr = todoArr;
+  if (todoArr.length === 0) {
+    uiObject.displayNothing();
+  } else {
+    uiObject.displayData(todoArr);
+  }
+  // remove from the dom
+  uiObject.removeTodo();
+});
+
+// clear all
+clear.addEventListener('click', () => uiObject.clearCompleted());
