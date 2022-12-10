@@ -80,6 +80,7 @@ After you're finished please remove all the comments and instructions!
 <!-- LIVE DEMO -->
 
 ## 🚀 Live Demo <a name="live-demo"></a>
+The live demo of the app can be found [here](https://prangonghose.github.io/To-do-list/dist/).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
