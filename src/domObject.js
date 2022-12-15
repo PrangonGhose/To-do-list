@@ -21,6 +21,7 @@ export default class UI {
   }
 
   displayData(todoArr = this.todoArr) {
+    const toDoPlaceholder = document.querySelector('.to-do-placeholder');
     const displayData = todoArr.map(UI.displayOnDom);
     toDoPlaceholder.innerHTML = (displayData).join(' ');
   }
@@ -38,11 +39,13 @@ export default class UI {
   }
 
   displayNothing = () => {
+    const toDoPlaceholder = document.querySelector('.to-do-placeholder');
     const displayData = '<h3 class="display-nothing">You have no task to show</h2>';
     toDoPlaceholder.innerHTML = displayData;
   }
 
   clearInput = () => {
+    const taskItem = document.querySelector('.add-to-list');
     taskItem.value = '';
   }
 
@@ -72,6 +75,7 @@ export default class UI {
   }
 
   removeTodo() {
+    const toDoPlaceholder = document.querySelector('.to-do-placeholder');
     toDoPlaceholder.addEventListener('click', (e) => {
       if (e.target.classList.contains('remove')) {
         e.target.parentElement.remove();
