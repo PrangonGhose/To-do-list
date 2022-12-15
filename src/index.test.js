@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import addToForm from './formAdd.js';
+import addToForm, { uiObject } from './formAdd.js';
 
 document.body.innerHTML = `
 <form class="add-form">
@@ -15,7 +15,9 @@ document.body.innerHTML = `
 
 const taskItem = document.querySelector('.add-to-list');
 
-describe('add', () => {
+describe('add and remove', () => {
+  uiObject.removeTodo();
+
   test('Correctly add first task to the DOM', () => {
     taskItem.value = 'task1';
     addToForm(taskItem);
@@ -42,5 +44,54 @@ describe('add', () => {
     addToForm(taskItem);
     const taskValue = document.querySelectorAll('.task-items');
     expect(taskValue).toHaveLength(4);
+  });
+
+  test('Correctly add fourth task to the DOM', () => {
+    taskItem.value = 'task5';
+    addToForm(taskItem);
+    const taskValue = document.querySelectorAll('.task-items');
+    expect(taskValue).toHaveLength(5);
+  });
+
+  test('Correctly add fourth task to the DOM', () => {
+    taskItem.value = 'task5';
+    addToForm(taskItem);
+    const taskValue = document.querySelectorAll('.task-items');
+    expect(taskValue).toHaveLength(6);
+  });
+
+  test('Correctly add fourth task to the DOM', () => {
+    taskItem.value = 'task5';
+    addToForm(taskItem);
+    const taskValue = document.querySelectorAll('.task-items');
+    expect(taskValue).toHaveLength(7);
+  });
+
+  test('Correctly Remove task from the DOM', () => {
+    const removeButton = document.querySelector('.remove');
+    removeButton.click();
+    const taskValue = document.querySelectorAll('.task-items');
+    expect(taskValue).toHaveLength(6);
+  });
+
+  test('Correctly Remove task from the DOM', () => {
+    const removeButton = document.querySelector('.remove');
+    removeButton.click();
+    const taskValue = document.querySelectorAll('.task-items');
+    expect(taskValue).toHaveLength(5);
+  });
+
+  test('Correctly Remove task from the DOM', () => {
+    const removeButton = document.querySelector('.remove');
+    removeButton.click();
+    const taskValue = document.querySelectorAll('.task-items');
+    expect(taskValue).toHaveLength(4);
+  });
+
+  test('Correctly Remove task from the DOM', () => {
+    const removeButton = document.querySelector('.remove');
+    removeButton.click();
+    const taskValue = document.querySelectorAll('.task-items');
+    expect(taskValue).toHaveLength(3);
   });
 });
